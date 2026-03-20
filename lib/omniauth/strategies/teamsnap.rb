@@ -22,6 +22,13 @@ module OmniAuth
         }
       end
 
+      # OmniAuth's default callback_url appends the request query string
+      # (?code=...&state=...) during the callback phase, causing the redirect_uri
+      # sent in the token exchange to not match what's registered with TeamSnap.
+      def callback_url
+        full_host + callback_path
+      end
+
       def raw_info
         @raw_info ||= get_raw_info
       end
